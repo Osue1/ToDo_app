@@ -62,7 +62,8 @@ def index():
 
 @app.route("/toggle/<int:task_id>")
 def toggle(task_id):
-    tasks = db.get_all_tasks()
+    user_id = session.get("user_id")
+    tasks = db.get_tasks_by_user(user_id)  # 自分のタスクのみ取得
     for t in tasks:
         if t.id == task_id:
             t.toggle()
