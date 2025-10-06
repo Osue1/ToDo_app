@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login - ToDo App</title>
+</head>
+<body>
+    <h1>ToDo App ログイン</h1>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul style="color:red;">
+          {% for msg in messages %}
+            <li>{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <label>ユーザー名:</label>
+        <input type="text" name="username" required>
+        <button type="submit">ログイン</button>
+    </form>
+</body>
+</html>
