@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ToDo App</title>
+</head>
+<body>
+    <h1>ToDo App</h1>
+    <form method="POST">
+        <input type="text" name="title" placeholder="新しいタスク">
+        <button type="submit">追加</button>
+    </form>
+    <ul>
+      {% for task in tasks %}
+          <li>
+              {% if task.done %}
+                  ✅ <s>{{ task.title }}</s>
+              {% else %}
+                  ⬜ {{ task.title }}
+              {% endif %}
+              <small>（{{ task.created_at }}）</small>
+              <a href="/toggle/{{ task.id }}">切替</a>
+              <a href="/delete/{{ task.id }}">削除</a>
+          </li>
+      {% endfor %}
+    </ul>
+</body>
+</html>
