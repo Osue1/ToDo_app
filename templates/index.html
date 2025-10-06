@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ToDo App</title>
+    <title>ToDo アプリ</title>
 </head>
 <body>
-    <h1>ToDo App</h1>
+    <form action="/logout" method="get" style="margin-top:10px;">
+        <button type="submit">ログアウト</button>
+    </form>
+    
+    <h1>{{ username }} さんの ToDo リスト</h1>
     <form method="POST">
         <input type="text" name="title" placeholder="新しいタスク">
         <button type="submit">追加</button>
@@ -23,5 +27,18 @@
           </li>
       {% endfor %}
     </ul>
+
+    
+
+    <!-- フラッシュメッセージ表示 -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul style="color:red;">
+          {% for msg in messages %}
+            <li>{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
 </body>
 </html>
