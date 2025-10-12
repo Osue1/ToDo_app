@@ -13,11 +13,12 @@ class DatabaseManager:
         cur = self.conn.cursor()
         # ユーザーテーブル
         cur.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE NOT NULL
-            )
-        """)
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    """)
         # タスクテーブル
         cur.execute("""
             CREATE TABLE IF NOT EXISTS tasks (
@@ -31,7 +32,9 @@ class DatabaseManager:
         """)
         self.conn.commit()
 
-
+##################################################
+    ############ タスク関連メソッド ############
+##################################################
     # タスク追加
     def add_task(self, user_id, title):
         cur = self.conn.cursor()
@@ -60,25 +63,26 @@ class DatabaseManager:
         cur.execute("DELETE FROM tasks WHERE id=?", (task_id,))
         self.conn.commit()
 
+##################################################
+    ############ ユーザー関連メソッド ############
+##################################################
     # ユーザー名からユーザー情報を取得
     def get_user_by_name(self, username):
         cur = self.conn.cursor()
-        cur.execute("SELECT id, username FROM users WHERE username=?", (username,))
+        cur.execute("SELECT id, username, password FROM users WHERE username=?", (username,))
         row = cur.fetchone()
         if row:
-            return User(id=row[0], username=row[1])
+            return User(id=row[0], username=row[1], password=row[2])
         return None
     
     # 新規ユーザー登録
-    def add_user(self, username):
+    def add_user(self, username, password):
         cur = self.conn.cursor()
         try:
-            cur.execute("INSERT INTO users (username) VALUES (?)", (username,))
+            cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
             self.conn.commit()
         except sqlite3.IntegrityError:
-            # すでに同じ username が存在しても OK
             pass
-        # 必ずユーザーオブジェクトを返す
         return self.get_user_by_name(username)
 
 

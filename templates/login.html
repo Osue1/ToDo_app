@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Login - ToDo App</title>
-</head>
-<body>
-    <h1>ToDo App ログイン</h1>
+  <head>
+      <meta charset="UTF-8">
+      <title>ログイン - ToDo アプリ</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+  </head>
+  <body>
+    <h1>ToDo アプリ - ログイン</h1>
 
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -17,10 +18,14 @@
       {% endif %}
     {% endwith %}
 
-    <form method="POST">
-        <label>ユーザー名:</label>
-        <input type="text" name="username" required>
-        <button type="submit">ログイン</button>
-    </form>
-</body>
+  <form method="POST">
+    <label>ユーザー名:</label>
+    <input type="text" name="username" required style="width: 220px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em;">
+    <br><br>
+    <label>パスワード:</label>
+    <input type="password" name="password" required style="width: 220px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em;">
+    <br><br>
+    <button type="submit">ログイン</button>
+  </form>
+  </body>
 </html>
